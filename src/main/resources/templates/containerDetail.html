@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center; width: 100%">Container detail</h1>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="#" th:action="@{/container/detail}" th:object="${container}" method="post">
+                        <div class="form-group">
+                            <label for="code">Code</label>
+                            <input type="text" class="form-control" id="code" aria-describedby="emailHelp" th:field="*{code}"  />
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <input type="text" class="form-control" id="note" th:field="*{note}" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="width">Weight</label>
+                            <input type="number" class="form-control" id="width" th:field="*{width}" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="number" class="form-control" id="height" th:field="*{height}" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="length">Length</label>
+                            <input type="number" class="form-control" id="length" th:field="*{length}" >
+                        </div>
+
+                        <input type="hidden" id="id" name="id" th:field="*{id}">
+
+                        <button type="submit" class="btn btn-primary" th:text="${container.id} > 0 ? 'Update container' : 'Create container'"></button>
+
+                    </form>
+                </div>
+            </div>
+</div>
+</body>
+</html>

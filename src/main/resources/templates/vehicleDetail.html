@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center; width: 100%">Vehicle detail</h1>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="#" th:action="@{/vehicle/detail}" th:object="${vehicle}" method="post">
+                        <div class="form-group">
+                            <label for="code">Code</label>
+                            <input type="text" class="form-control" id="code" aria-describedby="emailHelp" th:field="*{code}"  />
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="numberOfCorrection">Number of correction</label>
+                            <input type="number" class="form-control" id="numberOfCorrection" th:field="*{numberOfCorrection}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="series">Series</label>
+                            <input type="number" class="form-control" id="series" th:field="*{series}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleType">Vehicle type</label>
+                            <select id="vehicleType" class="form-control" th:field="*{vehicleType}" th:disabled="${vehicle.vehicleType != null}">
+                                <option th:each="vehicleType : ${T(com.VEA.TestWeb.Enums.VehicleType).values()}"
+                                        th:value="${vehicleType}" th:text="${vehicleType}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea class="form-control" id="note" rows="3" th:field="*{note}"></textarea>
+                        </div>
+
+                        <div th:if="${vehicle.vehicleType == T(com.VEA.TestWeb.Enums.VehicleType).Freight}">
+                            <div class="form-group">
+                                <label for="loadCapacity">Load capacity</label>
+                                <input type="number" class="form-control" id="loadCapacity" th:field="*{loadCapacity}" step=".01" >
+                            </div>
+                        </div>
+
+
+                        <div th:if="${vehicle.vehicleType == T(com.VEA.TestWeb.Enums.VehicleType).Towing}">
+                            <div class="form-group">
+                                <label for="breakingWeight">Breaking weight</label>
+                                <input type="number" class="form-control" id="breakingWeight" th:field="*{breakingWeight}" step=".01" >
+                            </div>
+                        </div>
+
+                        <div th:if="${vehicle.vehicleType == T(com.VEA.TestWeb.Enums.VehicleType).Personal}">
+                            <div class="form-group">
+                                <label for="sittingCapacity">Sitting capacity</label>
+                                <input type="number" class="form-control" id="sittingCapacity" th:field="*{sittingCapacity}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="standingCapacity">Breaking weight</label>
+                                <input type="number" class="form-control" id="standingCapacity" th:field="*{standingCapacity}" >
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" id="id" name="id" th:field="*{id}">
+
+                        <button type="submit" class="btn btn-primary" th:text="${vehicle.id} > 0 ? 'Update vehicle' : 'Create vehicle'"></button>
+
+                    </form>
+                </div>
+            </div>
+</div>
+</body>
+</html>

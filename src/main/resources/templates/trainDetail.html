@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center; width: 100%">Train detail</h1>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="#" th:action="@{/train/save}" th:object="${train}" method="post">
+                        <div class="form-group">
+                            <label for="dateFrom">Date from</label>
+                            <input type="date" class="form-control" id="dateFrom" name="birthday" th:field="*{dateFrom}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateTo">Date to</label>
+                            <input type="date" class="form-control" id="dateTo" name="birthday" th:field="*{dateTo}">
+                        </div>
+
+                        <input type="hidden" id="id" name="id" th:field="*{id}">
+
+                        <button type="submit" class="btn btn-primary" th:if="${vehicle.id} <= 0">Create train</button>
+
+                    </form>
+                </div>
+            </div>
+</div>
+</body>
+</html>

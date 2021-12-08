@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center; width:100%">Trains</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 offset-md-10">
+            <a th:href="@{/train/detail(id=0)}" class="btn btn-primary" style="float: right;" role="button">Load the train</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Date from</th>
+                                <th scope="col">Date to</th>
+                                <th scope="col">Vehicle count</th>
+                                <!--<th>&nbsp;</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="train : ${trains}">
+                                <td th:text="${train.id}">1</td>
+                                <td th:text="${train.dateFrom}">1</td>
+                                <td th:text="${train.dateTo}">1</td>
+                                <td th:text="${train.transportMeanCount}">1</td>
+                                <td>
+                                    <!--<a th:href="@{/vehicle/detail(id=${vehicle.id})}"><i class="fas fa-edit"></i></a>
+                                    <a th:href="@{/vehicle/delete(id=${vehicle.id})}"><i class="fas fa-trash"></i></a>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+</div>
+
+</body>
+</html>
