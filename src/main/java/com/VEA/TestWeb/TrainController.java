@@ -1,6 +1,7 @@
 package com.VEA.TestWeb;
 
 import com.VEA.TestWeb.Interface.Service.TrainService;
+import com.VEA.TestWeb.Model.Train;
 import com.VEA.TestWeb.ViewModel.Train.TrainDetailViewModel;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleDetailViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,38 @@ public class TrainController {
     public ModelAndView detail(int id)
     {
         ModelAndView mav = new ModelAndView("trainDetail");
-        mav.addObject("train", trainService.getDetail(id));
+        try{
+            mav.addObject("train", trainService.getDetail(id));
+        }
+        catch (Exception e){
+            //TODO
+        }
         return mav;
     }
 
     @PostMapping("/train/save")
-    public ModelAndView save(TrainDetailViewModel trainDetailViewModel)
+    public String save(TrainDetailViewModel trainDetailViewModel)
     {
-        //TODO: Doresit ukladani vlaku: vlak je v prvni fazi nutne ulozit. Po ulozeni se zpristupni grid na nasazeni prostredku na vlak
-
-        ModelAndView mav = new ModelAndView("trainDetail");
-        //mav.addObject("train", trainService.getDetail(id));
-        return mav;
+        try{
+            Train train = trainService.save(trainDetailViewModel);
+            return "redirect:/train/detail?id=" + train.getId();
+        }
+        catch (Exception e){
+            //TODO
+            return "redirect:/train/";
+        }
     }
+    @GetMapping("train/delete")
+    public String delete(int id){
+        try
+        {
+            trainService.delete(id);
+            return "redirect:/train/";
+        }
+        catch (Exception e){
+            //TODO
+            return "redirect:/train/";
+        }
+    }
+
 }

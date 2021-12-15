@@ -1,7 +1,12 @@
 package com.VEA.TestWeb.Model;
 
+import com.VEA.TestWeb.Enums.VehicleType;
+import com.VEA.TestWeb.ViewModel.Train.TrainDetailViewModel;
+import com.VEA.TestWeb.ViewModel.TransportMean.TransportMeanGridViewModel;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -60,5 +65,28 @@ public class Train {
         }
 
         return ((int) this.transportMeans.stream().count());
+    }
+
+    public TrainDetailViewModel toTrainDetailViewModel(){
+        Set<TransportMeanGridViewModel> transportMeanGridViewModelList = new HashSet<TransportMeanGridViewModel>();
+
+        for (TransportMean transportMean : this.getTransportMeans()) {
+            VehicleType vehicleType = transportMean.getVehicle().getVehicleType();
+            String material = "";
+            Double amount = null;
+            if(transportMean.getCargo() != null){
+                material = transportMean.getCargo().getMaterial().getName();
+                amount = transportMean.getCargo().getAmount();
+            }
+
+            transportMeanGridViewModelList.add(new TransportMeanGridViewModel(transportMean.id, vehicleType, material, amount));
+        }
+
+        return new TrainDetailViewModel(id, dateFrom, dateTo, transportMeanGridViewModelList);
+    }
+
+    public void mapFromTrainDetailViewModel(TrainDetailViewModel trainDetailViewModel){
+        this.dateFrom = trainDetailViewModel.dateFrom;
+        this.dateTo = trainDetailViewModel.dateTo;
     }
 }

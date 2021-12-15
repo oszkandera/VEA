@@ -1,6 +1,7 @@
 package com.VEA.TestWeb.ViewModel.Train;
 
-import com.VEA.TestWeb.Model.TransportMean;
+import com.VEA.TestWeb.ViewModel.TransportMean.TransportMeanGridViewModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -8,17 +9,22 @@ import java.util.Set;
 public class TrainDetailViewModel {
 
     public int id;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate dateFrom;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate dateTo;
 
-    public Set<TransportMean> transportMeans;
+    public Set<TransportMeanGridViewModel> transportMeans;
 
     public TrainDetailViewModel() {}
 
-    public TrainDetailViewModel(int id, LocalDate dateFrom, LocalDate dateTo, Set<TransportMean> transportMeans) {
+    public TrainDetailViewModel(int id, LocalDate dateFrom, LocalDate dateTo) {
         this.id = id;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+    }
+    public TrainDetailViewModel(int id, LocalDate dateFrom, LocalDate dateTo, Set<TransportMeanGridViewModel> transportMeans) {
+        this(id, dateFrom, dateTo);
         this.transportMeans = transportMeans;
     }
 
@@ -46,11 +52,11 @@ public class TrainDetailViewModel {
         this.dateTo = dateTo;
     }
 
-    public Set<TransportMean> getTransportMeans() {
+    public Set<TransportMeanGridViewModel> getTransportMeans() {
         return transportMeans;
     }
 
-    public void setTransportMeans(Set<TransportMean> transportMeans) {
+    public void setTransportMeans(Set<TransportMeanGridViewModel> transportMeans) {
         this.transportMeans = transportMeans;
     }
 }

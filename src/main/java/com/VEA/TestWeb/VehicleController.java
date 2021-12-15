@@ -1,11 +1,14 @@
 package com.VEA.TestWeb;
 
+import com.VEA.TestWeb.Enums.VehicleType;
 import com.VEA.TestWeb.Interface.Service.VehicleService;
+import com.VEA.TestWeb.Model.Vehicle;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleDetailViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,13 +37,12 @@ public class VehicleController {
     public String detailSubmit(VehicleDetailViewModel vehicleDetailViewModel){
         try
         {
-            var vehicle = vehicleService.saveVehicle(vehicleDetailViewModel);
+            var vehicle = vehicleService.save(vehicleDetailViewModel);
             return "redirect:/vehicle/detail?id=" + vehicle.getId();
 
         }
         catch (Exception e){
             return "redirect:/vehicle/";
-
         }
     }
 
@@ -54,5 +56,12 @@ public class VehicleController {
         catch (Exception e){
             return "redirect:/vehicle/";
         }
+    }
+
+    @GetMapping("vehicle/getVehicleType")
+    public @ResponseBody
+    VehicleType getVehicleType(int id){
+        Vehicle vehicle = vehicleService.findVehicle(id);
+        return vehicle.getVehicleType();
     }
 }

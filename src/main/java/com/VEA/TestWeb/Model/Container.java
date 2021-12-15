@@ -40,11 +40,7 @@ public class Container {
     @Column(name = "Length")
     public double length;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ContainerCargo",
-            joinColumns = @JoinColumn(name = "IdContainer"),
-            inverseJoinColumns = @JoinColumn(name = "IdCargo"))
+    @OneToMany(mappedBy="container")
     private Set<Cargo> cargo;
 
     public int getId() {
@@ -103,16 +99,11 @@ public class Container {
         this.cargo = cargo;
     }
 
-    public ContainerDetailViewModel toContainerDetailViewModel(){
-        ContainerDetailViewModel viewModel = new ContainerDetailViewModel(id, code, note, width, height, length);
-        return viewModel;
-    }
-
     public void mapFromContainerDetailViewModel(ContainerDetailViewModel containerDetailViewModel){
         this.setCode(containerDetailViewModel.getCode());
         this.setNote(containerDetailViewModel.getNote());
         this.setHeight(containerDetailViewModel.getHeight());
         this.setWidth(containerDetailViewModel.getWidth());
-        this.setLength(containerDetailViewModel.getHeight());
+        this.setLength(containerDetailViewModel.getLength());
     }
 }

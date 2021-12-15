@@ -5,9 +5,11 @@ import com.VEA.TestWeb.Model.*;
 import com.VEA.TestWeb.Repository.ContainerRepository;
 import com.VEA.TestWeb.ViewModel.Container.ContainerDetailViewModel;
 import com.VEA.TestWeb.ViewModel.Container.ContainerGridViewModel;
+import com.VEA.TestWeb.ViewModel.DropDownListViewModel;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleDetailViewModel;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleGridViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -19,6 +21,8 @@ public class ContainerService implements com.VEA.TestWeb.Interface.Service.Conta
 
     @Autowired
     ContainerRepository containerRepository;
+    @Autowired
+    ConversionService conversionService;
 
     @Override
     public List<ContainerGridViewModel> getDataForGrid() {
@@ -42,12 +46,12 @@ public class ContainerService implements com.VEA.TestWeb.Interface.Service.Conta
         }
 
         Container containerInstance = container.get();
-        ContainerDetailViewModel viewModelData = containerInstance.toContainerDetailViewModel();
+        ContainerDetailViewModel viewModelData = conversionService.convert(containerInstance, ContainerDetailViewModel.class);
 
         return viewModelData;
     }
 
-    public Container saveContainer(ContainerDetailViewModel containerDetailViewModel) throws Exception{
+    public Container save(ContainerDetailViewModel containerDetailViewModel) throws Exception{
         int containerId = containerDetailViewModel.getId();
 
         Container container;
@@ -78,7 +82,20 @@ public class ContainerService implements com.VEA.TestWeb.Interface.Service.Conta
         containerRepository.delete(container);
     }
 
-    private Container findContainer(int id){
+    @Override
+    public List<DropDownListViewModel> getContainerDropDownList() {
+        List<Container> data = containerRepository.findAll();
+
+        List<DropDownListViewModel> dropDownList = new LinkedList<DropDownListViewModel>();
+
+        for (Container container: data) {
+            dropDownList.add(new DropDownListViewModel(container.id, container.getCode()));
+        }
+
+        return dropDownList;
+    }
+
+    public Container findContainer(int id){
         Optional<Container> container = containerRepository.findById(id);
 
         if(container.isEmpty()){

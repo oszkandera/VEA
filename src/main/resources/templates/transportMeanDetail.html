@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center; width: 100%">Transport mean detail</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="#" th:action="@{/transportMean/save}" th:object="${transportMean}" method="post">
+
+                <div class="form-group">
+                    <label for="vehicle">Vehicle</label>
+                    <select id="vehicle" class="form-control" th:field="*{idVehicle}" th:disabled="${transportMean.id > 0}" onchange="TransportMean.VehicleChanged()">
+                        <option value="0"></option>
+                        <option th:each="vehicleItem : ${vehicleDropDownList}"
+                                th:value="${vehicleItem.id}" th:text="${vehicleItem.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="container">Container</label>
+                    <select id="container" class="form-control" th:field="*{idContainer}" th:disabled="${transportMean.id > 0}">
+                        <option value="0"></option>
+                        <option th:each="containerItem : ${containerDropDownList}"
+                                th:value="${containerItem.id}" th:text="${containerItem.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="material">Material</label>
+                    <select id="material" class="form-control" th:field="*{idMaterial}" th:disabled="${transportMean.id > 0}">
+                        <option value="0"></option>
+                        <option th:each="materialItem : ${materialDropDownList}"
+                                th:value="${materialItem.id}" th:text="${materialItem.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount (kg)</label>
+                    <input type="number" class="form-control" id="amount" th:field="*{amount}" step=".01" th:disabled="${transportMean.id > 0}">
+                </div>
+
+
+                <input type="hidden" id="id" name="id" th:field="*{id}">
+                <input type="hidden" id="idTrain" name="id" th:field="*{idTrain}">
+                <button type="submit" class="btn btn-primary" th:if="${transportMean.id} <= 0">Load cargo on train</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.VEA.TestWeb.Model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -14,14 +13,24 @@ public class Cargo {
     public int id;
 
     @Column(name = "Amount")
-    public LocalDateTime amount;
+    public double amount;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "IdMaterial", nullable = false)
     public Material material;
 
-    @ManyToMany(mappedBy = "cargo")
-    public Set<Container> containers;
+    @ManyToOne()
+    @JoinColumn(name = "IdContainer", nullable = false)
+    public Container container;
+
+    public Cargo() {
+    }
+
+    public Cargo(double amount, Material material, Container container) {
+        this.amount = amount;
+        this.material = material;
+        this.container = container;
+    }
 
     public int getId() {
         return id;
@@ -31,11 +40,11 @@ public class Cargo {
         this.id = id;
     }
 
-    public LocalDateTime getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(LocalDateTime amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -47,11 +56,11 @@ public class Cargo {
         this.material = material;
     }
 
-    public Set<Container> getContainers() {
-        return containers;
+    public Container getContainer() {
+        return container;
     }
 
-    public void setContainers(Set<Container> containers) {
-        this.containers = containers;
+    public void setContainer(Container container) {
+        this.container = container;
     }
 }

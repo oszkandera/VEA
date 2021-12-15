@@ -1,4 +1,7 @@
 package com.VEA.TestWeb.Interface.Service;
 
-public interface CargoService {
+import com.VEA.TestWeb.Model.Cargo;
+
+public interface CargoService extends SavableService<Cargo, Cargo>{
+    public Cargo createCargo(int idContainer, int idMaterial, double amount) throws Exception;
 }

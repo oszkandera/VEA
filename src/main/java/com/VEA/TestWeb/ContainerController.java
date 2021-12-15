@@ -34,7 +34,7 @@ public class ContainerController {
     public String detailSubmit(ContainerDetailViewModel containerDetailViewModel){
         try
         {
-            var container = containerService.saveContainer(containerDetailViewModel);
+            var container = containerService.save(containerDetailViewModel);
             return "redirect:/container/detail?id=" + container.getId();
 
         }

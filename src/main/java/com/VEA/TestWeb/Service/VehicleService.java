@@ -7,6 +7,7 @@ import com.VEA.TestWeb.Model.TowingVehicle;
 import com.VEA.TestWeb.Model.Vehicle;
 import com.VEA.TestWeb.Repository.VehicleRepository;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleDetailViewModel;
+import com.VEA.TestWeb.ViewModel.DropDownListViewModel;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleGridViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class VehicleService implements com.VEA.TestWeb.Interface.Service.Vehicle
         return viewModelData;
     }
 
-    public Vehicle saveVehicle(VehicleDetailViewModel vehicleDetailViewModel) throws Exception{
+    public Vehicle save(VehicleDetailViewModel vehicleDetailViewModel) throws Exception{
         int vehicleId = vehicleDetailViewModel.getId();
 
         Vehicle vehicle;
@@ -92,7 +93,19 @@ public class VehicleService implements com.VEA.TestWeb.Interface.Service.Vehicle
         vehicleRepository.delete(vehicle);
     }
 
-    private Vehicle findVehicle(int id){
+    public List<DropDownListViewModel> getVehicleDropDownList(){
+        List<Vehicle> data = vehicleRepository.findAll();
+
+        List<DropDownListViewModel> vehicleDropDownList = new LinkedList<DropDownListViewModel>();
+
+        for (Vehicle vehicle: data) {
+            vehicleDropDownList.add(new DropDownListViewModel(vehicle.id, vehicle.getName()));
+        }
+
+        return vehicleDropDownList;
+    }
+
+    public Vehicle findVehicle(int id){
         Optional<Vehicle> vehicle = vehicleRepository.findById(id);
 
         if(vehicle.isEmpty()){

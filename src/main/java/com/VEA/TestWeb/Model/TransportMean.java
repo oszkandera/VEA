@@ -1,8 +1,11 @@
 package com.VEA.TestWeb.Model;
 
+import com.VEA.TestWeb.ViewModel.TransportMean.TransportMeanDetailViewModel;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -15,15 +18,15 @@ public class TransportMean {
     public int id;
 
     @ManyToOne
-    @JoinColumn(name="IdVehicle", nullable=false)
+    @JoinColumn(name = "IdVehicle", nullable = false)
     public Vehicle vehicle;
 
     @ManyToOne
-    @JoinColumn(name="IdCargo", nullable=true)
+    @JoinColumn(name = "IdCargo", nullable = true)
     public Cargo cargo;
 
     @ManyToOne
-    @JoinColumn(name="IdTrain", nullable=true)
+    @JoinColumn(name = "IdTrain", nullable = true)
     public Train train;
 
     public int getId() {

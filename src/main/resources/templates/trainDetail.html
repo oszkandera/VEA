@@ -6,33 +6,67 @@
     <title>Welcome to Our Site</title>
 </head>
 <body>
-
 <div layout:fragment="content">
     <div class="row">
         <div class="col-md-12">
             <h1 style="text-align:center; width: 100%">Train detail</h1>
         </div>
     </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <form action="#" th:action="@{/train/save}" th:object="${train}" method="post">
-                        <div class="form-group">
-                            <label for="dateFrom">Date from</label>
-                            <input type="date" class="form-control" id="dateFrom" name="birthday" th:field="*{dateFrom}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dateTo">Date to</label>
-                            <input type="date" class="form-control" id="dateTo" name="birthday" th:field="*{dateTo}">
-                        </div>
-
-                        <input type="hidden" id="id" name="id" th:field="*{id}">
-
-                        <button type="submit" class="btn btn-primary" th:if="${vehicle.id} <= 0">Create train</button>
-
-                    </form>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="#" th:action="@{/train/save}" th:object="${train}" method="post">
+                <div class="form-group">
+                    <label for="dateFrom">Date from</label>
+                    <input type="date" class="form-control" id="dateFrom" name="birthday" th:field="*{dateFrom}">
                 </div>
+                <div class="form-group">
+                    <label for="dateTo">Date to</label>
+                    <input type="date" class="form-control" id="dateTo" name="birthday" th:field="*{dateTo}">
+                </div>
+                <input type="hidden" id="id" name="id" th:field="*{id}">
+                <button type="submit" class="btn btn-primary" th:if="${train.id} <= 0">Create train</button>
+                </form>
             </div>
+        </div>
+
+    <div th:if="${train.id} > 0">
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Transport means</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 offset-md-10">
+                <a th:href="@{/transportMean/detail(idTrain=${train.id}, id=0)}" class="btn btn-primary" style="float: right;" role="button">Add</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Vehicle type</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Amount</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="transportMean : ${train.transportMeans}">
+                        <td th:text="${transportMean.vehicleType}">1</td>
+                        <td th:text="${transportMean.material}">1</td>
+                        <td th:text="${transportMean.amount}">1</td>
+                        <td>
+                             <a th:href="@{/transportMean/detail(idTrain=${train.id}, id=${transportMean.id})}"><i class="fas fa-edit"></i></a>
+                             <a th:href="@{/transportMean/delete(idTrain=${train.id}, id=${transportMean.id})}"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
