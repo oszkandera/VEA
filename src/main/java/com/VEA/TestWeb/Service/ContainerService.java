@@ -1,6 +1,7 @@
 package com.VEA.TestWeb.Service;
 
 import com.VEA.TestWeb.Enums.VehicleType;
+import com.VEA.TestWeb.Interface.DAO.ContainerDAO;
 import com.VEA.TestWeb.Model.*;
 import com.VEA.TestWeb.Repository.ContainerRepository;
 import com.VEA.TestWeb.ViewModel.Container.ContainerDetailViewModel;
@@ -23,15 +24,24 @@ public class ContainerService implements com.VEA.TestWeb.Interface.Service.Conta
     ContainerRepository containerRepository;
     @Autowired
     ConversionService conversionService;
+    @Autowired
+    ContainerDAO containerDAO;
+
 
     @Override
     public List<ContainerGridViewModel> getDataForGrid() {
-        List<Container> data = containerRepository.findAll();
+        //List<Container> data = containerRepository.findAll();
 
-        List<ContainerGridViewModel> viewModelData = new LinkedList<ContainerGridViewModel>();
+        List<Container> data = containerDAO.getAll();
+
+
+        List<ContainerGridViewModel> viewModelData = new LinkedList<>();
 
         for (Container container: data) {
-            viewModelData.add(new ContainerGridViewModel(container.getId(), container.getCode(), container.getNote()));
+            viewModelData.add(new ContainerGridViewModel(container.getId(),
+                                                         container.getCode(),
+                                                         container.getNote(),
+                                                         (int)container.getCargo().stream().count()));
         }
 
         return viewModelData;
@@ -67,6 +77,13 @@ public class ContainerService implements com.VEA.TestWeb.Interface.Service.Conta
         }
 
         container.mapFromContainerDetailViewModel(containerDetailViewModel);
+        containerRepository.save(container);
+
+        return container;
+    }
+
+    @Override
+    public Container save(Container container){
         containerRepository.save(container);
 
         return container;

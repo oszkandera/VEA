@@ -13,4 +13,5 @@ public interface ContainerService extends SavableService<Container, ContainerDet
     public void delete(int id) throws Exception;
     public List<DropDownListViewModel> getContainerDropDownList();
     public Container findContainer(int id);
+    public Container save(Container container);
 }

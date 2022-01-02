@@ -1,5 +1,6 @@
 package com.VEA.TestWeb.Service;
 
+import com.VEA.TestWeb.Dto.TransportMeanCreateDto;
 import com.VEA.TestWeb.Enums.VehicleType;
 import com.VEA.TestWeb.Model.*;
 import com.VEA.TestWeb.Repository.TransportMeanRepository;
@@ -8,9 +9,11 @@ import com.VEA.TestWeb.ViewModel.Train.TrainDetailViewModel;
 import com.VEA.TestWeb.ViewModel.TransportMean.TransportMeanDetailViewModel;
 import com.VEA.TestWeb.ViewModel.TransportMean.TransportMeanGridViewModel;
 import com.VEA.TestWeb.ViewModel.Vehicle.VehicleGridViewModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import javax.transaction.Transactional;
 import java.util.LinkedList;
@@ -27,9 +30,11 @@ public class TransportMeanService implements com.VEA.TestWeb.Interface.Service.T
     @Autowired
     TrainService trainService;
     @Autowired
-    ContainerService containerService;
+    ModelMapper modelMapper;
     @Autowired
     MaterialService materialService;
+    @Autowired
+    ContainerService containerService;
     @Autowired
     ConversionService conversionService;
     @Autowired
@@ -101,6 +106,31 @@ public class TransportMeanService implements com.VEA.TestWeb.Interface.Service.T
         transportMeanRepository.save(transportMean);
 
         return transportMean;
+    }
+
+    @Override
+    @Transactional
+    public TransportMean save(TransportMeanCreateDto transportMeanCreateDto){
+        Cargo cargo = modelMapper.map(transportMeanCreateDto.cargo, Cargo.class);
+        Container container = modelMapper.map(transportMeanCreateDto.cargo.container, Container.class);
+
+        Material material = materialService.findMaterialByCode(transportMeanCreateDto.cargo.materialCode);
+        Vehicle vehicle = vehicleService.findByCode(transportMeanCreateDto.vehicleCode);
+        Train train = trainService.findTrain(transportMeanCreateDto.trainId);
+
+        cargo.setMaterial(material);
+        cargo.setContainer(container);
+
+        TransportMean transportMean = new TransportMean();
+        transportMean.setCargo(cargo);
+        transportMean.setVehicle(vehicle);
+        transportMean.setTrain(train);
+
+        containerService.save(container);
+        cargoService.save(cargo);
+        transportMeanRepository.save(transportMean);
+
+        return  transportMean;
     }
 
     public void delete(int id) throws Exception{

@@ -2,16 +2,18 @@ package com.VEA.TestWeb.Factory;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
     private static BasicDataSource dataSource;
 
-    private ConnectionFactory() {
+    private ConnectionFactory()
+    {
     }
 
-    public static Connection getConnection() throws SQLException {
+    static {
         if (dataSource == null) {
             dataSource = new BasicDataSource();
             dataSource.setUrl("jdbc:sqlserver://localhost;databaseName=VEA");
@@ -19,8 +21,13 @@ public class ConnectionFactory {
             dataSource.setUsername("sa");
             dataSource.setPassword("kokos");
         }
+    }
 
-        Connection connection = dataSource.getConnection();
-        return connection;
+    public static DataSource getDataSource(){
+        return dataSource;
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 }

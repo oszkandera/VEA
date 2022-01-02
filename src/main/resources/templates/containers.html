@@ -25,6 +25,7 @@
                             <tr>
                                 <th scope="col">Code</th>
                                 <th scope="col">Note</th>
+                                <th scope="col">Number of assignments</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
@@ -32,6 +33,7 @@
                             <tr th:each="container : ${containers}">
                                 <td th:text="${container.code}">1</td>
                                 <td th:text="${container.note}">1</td>
+                                <td th:text="${container.cargoCount}">1</td>
                                 <td>
                                     <a th:href="@{/container/detail(id=${container.id})}"><i class="fas fa-edit" style="padding-right: 10px"></i></a>
                                     <a th:href="@{/container/delete(id=${container.id})}"><i class="fas fa-trash"></i></a>

@@ -1,5 +1,6 @@
 package com.VEA.TestWeb.Interface.Service;
 
+import com.VEA.TestWeb.Dto.TransportMeanCreateDto;
 import com.VEA.TestWeb.Model.Train;
 import com.VEA.TestWeb.Model.TransportMean;
 import com.VEA.TestWeb.ViewModel.Train.TrainDetailViewModel;
@@ -14,4 +15,5 @@ public interface TransportMeanService extends SavableService<TransportMean, Tran
     public List<TransportMeanGridViewModel> getDataForGrid();
     public TransportMeanDetailViewModel getDetail(int idTrain, int id) throws Exception;
     public void delete(int id) throws Exception;
+    public TransportMean save(TransportMeanCreateDto transportMeanCreateDto);
 }

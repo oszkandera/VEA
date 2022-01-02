@@ -4,6 +4,7 @@ import com.VEA.TestWeb.ViewModel.Container.ContainerDetailViewModel;
 import com.VEA.TestWeb.ViewModel.Container.ContainerGridViewModel;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,7 @@ public class Container {
     public double length;
 
     @OneToMany(mappedBy="container")
-    private Set<Cargo> cargo;
+    private Set<Cargo> cargo = new HashSet<>();
 
     public int getId() {
         return id;

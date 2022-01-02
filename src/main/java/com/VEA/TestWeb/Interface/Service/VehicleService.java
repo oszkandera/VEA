@@ -13,4 +13,5 @@ public interface VehicleService extends SavableService<Vehicle, VehicleDetailVie
     public void delete(int id) throws Exception;
     public List<DropDownListViewModel> getVehicleDropDownList();
     public Vehicle findVehicle(int id);
+    public Vehicle findByCode(String code);
 }

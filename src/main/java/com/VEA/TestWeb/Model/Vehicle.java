@@ -17,7 +17,7 @@ public abstract class Vehicle {
     public int id;
 
     @Column(name = "[Code]")
-    public String code; //TODO: Converter, which will be converting code to formatted code???
+    public String code;
 
     @Column(name = "[Note]")
     public String note;

@@ -114,4 +114,14 @@ public class VehicleService implements com.VEA.TestWeb.Interface.Service.Vehicle
 
         return vehicle.get();
     }
+
+    public Vehicle findByCode(String code){
+        Optional<Vehicle> vehicle = vehicleRepository.findAll().stream().filter(x -> x.code.equals(code)).findFirst();
+
+        if(vehicle.isEmpty()){
+            return null;
+        }
+
+        return vehicle.get();
+    }
 }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface MaterialService {
     public List<DropDownListViewModel> getMaterialDropDownList();
     public Material findMaterial(int id);
+    public Material findMaterialByCode(String code);
 }

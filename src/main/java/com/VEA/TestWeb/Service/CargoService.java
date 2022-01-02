@@ -1,5 +1,6 @@
 package com.VEA.TestWeb.Service;
 
+import com.VEA.TestWeb.Interface.DAO.ContainerDAO;
 import com.VEA.TestWeb.Model.*;
 import com.VEA.TestWeb.Repository.CargoRepository;
 import com.VEA.TestWeb.Repository.ContainerRepository;
@@ -42,5 +43,11 @@ public class CargoService implements com.VEA.TestWeb.Interface.Service.CargoServ
         cargoRepository.save(cargo);
 
         return cargo;
+    }
+
+    public List<Cargo> getAll(){
+        List<Cargo> data = cargoRepository.findAll();
+
+        return data;
     }
 }

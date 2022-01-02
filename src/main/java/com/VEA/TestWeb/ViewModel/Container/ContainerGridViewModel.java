@@ -2,14 +2,16 @@ package com.VEA.TestWeb.ViewModel.Container;
 
 public class ContainerGridViewModel {
 
-    public ContainerGridViewModel(int id, String code, String note) {
+    public ContainerGridViewModel(int id, String code, String note, int cargoCount) {
         this.id = id;
         this.code = code;
         this.note = note;
+        this.cargoCount = cargoCount;
     }
     public int id;
     public String code;
     public String note;
+    public int cargoCount;
 
     public int getId() {
         return id;
@@ -33,5 +35,13 @@ public class ContainerGridViewModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getCargoCount() {
+        return cargoCount;
+    }
+
+    public void setCargoCount(int cargoCount) {
+        this.cargoCount = cargoCount;
     }
 }

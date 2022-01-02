@@ -43,4 +43,15 @@ public class MaterialService implements com.VEA.TestWeb.Interface.Service.Materi
 
         return material.get();
     }
+
+    @Override
+    public Material findMaterialByCode(String code) {
+        Optional<Material> material = materialRepository.findAll().stream().filter(x -> x.code.equals(code)).findFirst();
+
+        if(material.isEmpty()){
+            return null;
+        }
+
+        return material.get();
+    }
 }
